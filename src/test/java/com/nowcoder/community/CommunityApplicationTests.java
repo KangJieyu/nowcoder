@@ -66,7 +66,7 @@ class CommunityApplicationTests implements ApplicationContextAware {
 
 	/**
 	 * 依赖注入
-	 * @Qualifier指定注入的bean
+	 * @Qualifier 指定注入的bean
 	 */
 	@Autowired
 	@Qualifier("hibernate")

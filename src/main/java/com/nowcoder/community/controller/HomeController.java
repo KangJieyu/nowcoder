@@ -49,8 +49,6 @@ public class HomeController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("post", post);
                 User user = userService.findUserById(Integer.parseInt(post.getUserId()));
-                System.out.println(user);
-                System.out.println(user.getHeaderUrl());
                 map.put("user", user);
                 discussPosts.add(map);
             }
