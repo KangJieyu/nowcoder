@@ -12,6 +12,9 @@ public class User {
     private int id;
     private String username;
     private String password;
+    /**
+     * 注册时生成的随机字符串，用于加密
+     */
     private String salt;
     private String email;
     /**
@@ -23,6 +26,9 @@ public class User {
      */
     private int status;
     private String activationCode;
+    /**
+     * 头像路径，默认 images.nowcoder.com/head/"1"t.png
+     */
     private String headerUrl;
     private Date createTime;
 

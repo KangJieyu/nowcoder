@@ -29,7 +29,9 @@ public class MailTests {
 
     @Test
     public void mailTests() {
-        mailClient.sendMail("2220406910@qq.com", "TEST", "首次测试");
+        for (int i = 0; i < 20; i++) {
+            mailClient.sendMail("1449550732@qq.com", "sb", "sb");
+        }
     }
 
     @Test
@@ -40,7 +42,7 @@ public class MailTests {
         // html静态内容与动态内容整合，并返回结构字符串
         String process = templateEngine.process("/mail/demo", context);
         System.out.println(process);
-        mailClient.sendMail("2220406910@qq.com", "TEST", process);
+        mailClient.sendMail("1449550732@qq.com", "TEST", process);
 
     }
 }
