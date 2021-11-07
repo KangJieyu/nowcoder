@@ -2,6 +2,7 @@ package com.nowcoder.community.service;
 
 import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.MailClient;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +22,7 @@ import java.util.Random;
  * @date 2021/9/21 11:03
  */
 @Service
-public class UserService {
+public class UserService implements CommunityConstant {
 
     @Autowired(required = false)
     private UserMapper userMapper;
@@ -84,9 +85,12 @@ public class UserService {
         // 验证邮箱，是否信息已经注册过
         u = userMapper.selectByEmail(user.getEmail());
         if (u != null) {
+            System.out.println(user.getEmail() + "\t该邮箱已经注册！");
             map.put("mailMessage", "该邮箱已经注册！");
             return map;
         }
+
+        System.out.println("开始注册用户了！");
 
         // 可以注册用户
         // 生成随机字符串
@@ -114,6 +118,31 @@ public class UserService {
         mailClient.sendMail(user.getEmail(), "激活账号", content);
 
         return map;
+    }
+
+    /**
+     * 激活用户的账号:
+     * 1、重复激活
+     * 2、激活码写入错误
+     * 3、激活成功
+     * @param userId 激活账号的id
+     * @param code  激活码
+     * @return  返回账号是否激活成功
+     */
+    public int activation(int userId, String code) {
+        // 查询用户
+        User user = userMapper.selectById(userId);
+        if (user.getStatus() == 1) {
+            // 重复激活
+            return ACTIVE_REPEAT;
+        } else if (user.getActivationCode().equals(code)) {
+            // 激活码匹对成功，修改用户状态，返回激活成功
+            userMapper.updateStatus(userId, 1);
+            return ACTIVE_SUCCESS;
+        } else {
+            // 激活失败
+            return ACTIVE_FAIL;
+        }
     }
 
 
